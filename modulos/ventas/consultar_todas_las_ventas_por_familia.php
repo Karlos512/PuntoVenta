@@ -1,10 +1,4 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: Luis_
- * Date: 27/10/2016
- * Time: 12:12 PM
- */
 if (!isset($_POST["fecha_inicio"])) exit("No hay fecha de inicio >:v");
 if (!defined("RAIZ")) {
     define("RAIZ", dirname(dirname(dirname(__FILE__))));

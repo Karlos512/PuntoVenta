@@ -1,15 +1,3 @@
-/***
- *     ___ ___   ____  ____  ____
- *    |   T   T /    Tl    j|    \
- *    | _   _ |Y  o  | |  T |  _  Y
- *    |  \_/  ||     | |  | |  |  |
- *    |   |   ||  _  | |  | |  |  |
- *    |   |   ||  |  | j  l |  |  |
- *    l___j___jl__j__j|____jl__j__j
- *
- *    Última modificación: 09 de junio de 2016 por Parzibyte
- *    Entorno: Desarrollo
- */
 $(document)
     .ready(function () {
         PNotify.prototype.options.styling = "fontawesome";

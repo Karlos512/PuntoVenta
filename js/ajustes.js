@@ -1,17 +1,3 @@
-/***
- *      ____  ____  __ __  _____ ______    ___  _____
- *     /    T|    ||  T  T/ ___/|      T  /  _]/ ___/
- *    Y  o  |l__  ||  |  (   \_ |      | /  [_(   \_
- *    |     |__j  ||  |  |\__  Tl_j  l_jY    _]\__  T
- *    |  _  /  |  ||  :  |/  \ |  |  |  |   [_ /  \ |
- *    |  |  \  `  |l     |\    |  |  |  |     T\    |
- *    l__j__j\____j \__,_j \___j  l__j  l_____j \___j
- *
- *    Última modificación: 09 de junio de 2016 por Parzibyte
- *    Entorno: Desarrollo
- */
-
-
 $(document).ready(function () {
     recuperar_impresoras_disponibles();
     recuperar_datos_empresa();

@@ -1,10 +1,5 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: parzibyte
- * Date: 05/08/2016
- * Time: 12:17 PM
- */
+
 if (!isset($_POST["productos"])) exit();
 if (!defined("RAIZ")) define("RAIZ", dirname(dirname(dirname(__FILE__))));
 require_once RAIZ . "/modulos/db.php";
