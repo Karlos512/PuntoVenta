@@ -1,14 +1,6 @@
 <?php
 
-error_reporting(0); #Desactivamos el reporte de errores. 
-/*******************************
- * Nombre del archivo: index.php
- * Autor: parzibyte
- * Última modificación: 14 de septiembre del 2016 por parzibyte
- * Este archivo es el principal; es el índice.
- * Desde aquí se incluyen los demás archivos (ventas, inventarios, etcétera)
- * Para que funcione bien, el archivo .htaccess debe estar configurado correctamente
- *******************************/
+error_reporting(0);
 
 #Definimos la raíz del directorio
 if (!defined("RAIZ")) define("RAIZ", dirname(__FILE__));
