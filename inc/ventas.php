@@ -5,13 +5,13 @@
         <div class="col-xs-12">
             <div class="btn-group btn-group-justified">
                 <div class="btn-group">
-                    <button id="quitar_ultimo_producto" type="button" class="btn btn-warning">
+                    <button id="quitar_ultimo_producto" type="button" class="btn btn-info">
                         <i class="fa-minus fa visible-xs"></i>
                         <span class="hidden-xs"><kbd>-</kbd> Quitar último producto</span>
                     </button>
                 </div>
                 <div class="btn-group">
-                    <button id="preparar_venta" type="button" class="btn btn-success">
+                    <button id="preparar_venta" type="button" class="btn btn-primary">
                         <i class="fa-check-circle-o fa visible-xs"></i>
                         <span class="hidden-xs"><kbd>F1</kbd> Realizar venta</span>
                     </button>
@@ -28,7 +28,7 @@
                 <input class="form-control" type="text" id="codigo_producto"
                        placeholder="Comienza a escribir o escanea el código">
             </div>
-            <h1 hidden="hidden"><strong>Total: </strong><span id="contenedor_total"></span></h1>
+            <h3 hidden="hidden"><strong>Total: </strong><span id="contenedor_total"></span></h3>
         </div>
     </div>
     <br>

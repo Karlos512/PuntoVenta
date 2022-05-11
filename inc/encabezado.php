@@ -1,13 +1,10 @@
 ﻿<?php
 if (!isset($_SESSION)) exit("<script>window.location.href = '../';</script>");
 ?>
-<?php
-const NOMBRE_NEGOCIO = "Mi Farmacia";
-?>
 <!DOCTYPE html>
 <html>
 <head>
-    <title><?php echo NOMBRE_NEGOCIO ?></title>
+    <title>FARMACIA</title>
     <link rel="icon" type="image/png" href="./img/favicon.png"/>
     <link href="./css/animate.css" rel="stylesheet">
     <link href="./css/np.css" rel="stylesheet">

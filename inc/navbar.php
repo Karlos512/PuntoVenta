@@ -3,15 +3,6 @@ if (!isset($_SESSION)) exit("<script>window.location.href = '../';</script>");
 ?>
 <nav class="navbar navbar-default">
     <div class="container-fluid">
-        <div class="navbar-header">
-            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
-                <span class="sr-only">Intercambiar navegación</span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-            </button>
-            <a class="navbar-brand" href="#" id="marca_del_producto"><?php echo NOMBRE_NEGOCIO ?></a>
-        </div>
         <div id="navbar" class="navbar-collapse collapse">
             <ul class="nav navbar-nav">
                 <li id="elem_ventas"><a href="./ventas"><i class="fa fa-usd"></i> Ventas</a></li>
@@ -19,7 +10,7 @@ if (!isset($_SESSION)) exit("<script>window.location.href = '../';</script>");
                 <li id="elem_caja"><a href="./caja"><i class="fa fa-money"></i> Caja</a></li>
                 <li id="elem_gastos"><a href="./gastos"><i class="fa fa-calculator"></i> Gastos</a></li>
                 <li id="elem_alta_inventarios"><a href="./alta-de-inventarios"><i class="fa fa-angle-double-up"></i>
-                        Alta de inventarios</a></li>
+                        Actualizar Inventario</a></li>
                 <li id="elem_reportes" class="dropdown">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><i class="fa fa-file-pdf-o"></i> Reportes <span class="caret"></span></a>
                     <ul class="dropdown-menu">
@@ -34,7 +25,7 @@ if (!isset($_SESSION)) exit("<script>window.location.href = '../';</script>");
             </ul>
             <ul class="nav navbar-nav navbar-right">
                 <li id="elem_ajustes" class="dropdown">
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><i class="fa fa-cog"></i> Ajustes <span class="caret"></span></a>
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><i class="fa fa-cog"></i><span class="caret"></span></a>
                     <ul class="dropdown-menu">
                         <li><a href="./ajustes"><i class="fa fa-cogs"></i> Generales</a></li>
                         <li><a href="./usuarios"><i class="fa fa-user"></i> Usuarios</a></li>
@@ -42,8 +33,9 @@ if (!isset($_SESSION)) exit("<script>window.location.href = '../';</script>");
                 </li>
                 <li class="dropdown">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><?php inicia_sesion_segura();
-                                                                                                                                        echo $_SESSION["nombre_de_usuario"] . " ";
-                                                                                                                                        echo (intval($_SESSION["administrador"]) === 1) ? '<i class="fa fa-unlock"></i>' : '<i class="fa fa-lock"></i>'; ?>
+                                                                                                                                        echo 'Hola, bienvenido '.$_SESSION["nombre_de_usuario"] . " ";
+                                                                                                                                        // echo (intval($_SESSION["administrador"]) === 1) ? '<i class="fa fa-unlock"></i>' : '<i class="fa fa-lock"></i>'; 
+                                                                                                                                        ?>
                         <span class="caret"></span></a>
                     <ul class="dropdown-menu">
                         <li><a id="ajustes" href="./modulos/usuarios/cerrar_sesion.php"><i class="fa fa-sign-out"></i>
@@ -77,29 +69,3 @@ if (!isset($_SESSION)) exit("<script>window.location.href = '../';</script>");
         $.get("./modulos/abrir_cajon.php");
     }
 </script>
-
-<div id="modal_acerca_de" class="modal fade" role="dialog">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal">&times;</button>
-                <h4 class="modal-title">Acerca de</h4>
-            </div>
-            <div class="modal-body">
-                <div class="well">
-                    <h1>OkVenta
-                        <small>v1.0</small>
-                    </h1>
-                    <br>
-                    <h2>Desarrollado y mantenido por <a target="_blank" href="https://parzibyte.me/blog">Parzibyte</a></h2>
-                </div>
-            </div>
-            <div class="modal-footer">
-                <div class="col-xs-12">
-                    <button data-dismiss="modal" class="form-control btn btn-success">Cerrar</button>
-                </div>
-
-            </div>
-        </div>
-    </div>
-</div>

@@ -6,14 +6,13 @@ error_reporting(0);
 if (!defined("RAIZ")) define("RAIZ", dirname(__FILE__));
 if (!defined("MINUTOS_EXPIRACION_SESION")) define("MINUTOS_EXPIRACION_SESION", 24 * 60);
 
-include_once RAIZ . "/modulos/funciones.php"; #Este archivo trae consigo algunas funciones que nos ayudan
-inicia_sesion_segura(); #Iniciamos la sesión para ocupar sus datos
+include_once RAIZ . "/modulos/funciones.php"; 
+inicia_sesion_segura();
 include_once RAIZ . "/inc/encabezado.php";
-#Comprobamos si el usuario ha iniciado sesión. En caso de que no, mostramos el formulario de login.
 if (!file_exists(RAIZ . "/config.php")) {
     if (isset($_SESSION["hora_de_inicio"]) and ((time() - $_SESSION["hora_de_inicio"]) / 60) <= MINUTOS_EXPIRACION_SESION) {
         include_once RAIZ . "/inc/navbar.php";
-        include_once RAIZ . "/modulos/funciones.php"; #Aquí tenemos nuestros estilos, título del documento, etcétera
+        include_once RAIZ . "/modulos/funciones.php";
 
         #La lista blanca es para evitar ataques. Si en el futuro se añade una opción, aquí se tiene que agregar
         $lista_blanca = array("pasar-inventario", "alta-de-inventarios", "caja", "clientes", "compras", "inventarios", "ventas", "reportes-inventarios", "reportes", "reportes-caja", "reportes-ventas", "gastos", "ajustes", "reportes-gastos", "reportes-bajas-inventario", "usuarios", "productos-en-stock");

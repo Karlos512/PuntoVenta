@@ -1,5 +1,7 @@
+<body>
+
 <div class="col-md-4 col-md-offset-4 col-xs-12">
-    <h3 class="text-center">Bienvenido de nuevo <i class="fa fa-smile-o"></i></h3>
+    <img src="img/validate.gif" alt="una imagen">
     <div class="col-md-12">
         <div class="form-group">
             <label for="usuario">Nombre de usuario</label>
@@ -13,10 +15,48 @@
         </div>
     </div>
     <div class="col-md-12">
-        <button id="iniciar_sesion" class="form-control btn btn-success">Iniciar sesión <i class="fa fa-sign-in"></i>
-        </button>
+        <button id="iniciar_sesion" class="form-control btn btn-primary">Iniciar sesión</button>
     </div>
 </div>
+<!--  -->
+</body>
+<style>
+body{
+  width: 100%;
+  color: #ffffff;
+  background: -webkit-linear-gradient(left, #2293D6, #2463D3, #2293D6, #2463D3);
+  background: linear-gradient(to right, #2293D6, #2463D3, #2293D6, #2463D3);
+  background-size: 600% 100%;
+  -webkit-animation: HeroBG 20s ease infinite;
+          animation: HeroBG 20s ease infinite;
+}
+
+@-webkit-keyframes HeroBG {
+  0% {
+    background-position: 0 0;
+  }
+  50% {
+    background-position: 100% 0;
+  }
+  100% {
+    background-position: 0 0;
+  }
+}
+
+@keyframes HeroBG {
+  0% {
+    background-position: 0 0;
+  }
+  50% {
+    background-position: 100% 0;
+  }
+  100% {
+    background-position: 0 0;
+  }
+}
+</style>
+
+<!--  -->
 <script>
     $(document).ready(function () {
         $("#usuario").focus();
