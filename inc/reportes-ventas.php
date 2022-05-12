@@ -6,8 +6,7 @@ if (!isset($_SESSION)) exit("<script>window.location.href = '../';</script>");
 </div>
 <div class="row hidden-print">
     <div class="col-xs-12">
-        <p class="h5 text-justify">Elige el lapso de tiempo en el que quieres que se genere el reporte. Lo que veas aquí
-            es lo mismo que aparecerá en él.<br>
+        <p class="h5 text-justify">Elige el lapso de tiempo en el que quieres que se genere el reporte.<br>
         </p>
     </div>
 </div>
@@ -27,7 +26,7 @@ if (!isset($_SESSION)) exit("<script>window.location.href = '../';</script>");
     </div>
     <div class="col-xs-12 col-sm-12 col-md-4 text-center">
         <div class="form-group">
-            <label for="familia">Familia</label>
+            <label for="familia">Categoría</label>
             <select class="form-control" name="familia" id="familia">
             </select>
         </div>
@@ -51,12 +50,12 @@ if (!isset($_SESSION)) exit("<script>window.location.href = '../';</script>");
 
 <div class="row"><br>
     <div class="col-xs-12 col-sm-12 col-md-3">
-        <h3 class="text-center">Por familia</h3>
+        <h3 class="text-center">Ventas por Categoría</h3>
         <div class="table-responsive">
             <table class="table table-condensed table-bordered table-hover">
                 <thead>
                 <tr>
-                    <th>Familia</th>
+                    <th>Categoría</th>
                     <th>Total</th>
                     <th>Utilidad</th>
                 </tr>

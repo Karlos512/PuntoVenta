@@ -4,5 +4,5 @@ if (!defined("RAIZ")) {
 }
 require_once RAIZ . "/modulos/db.php";
 require_once RAIZ . "/modulos/familias/familias.php";
-$familias = consultar_familias();
-echo json_encode($familias);
+$categorias = consultar_categorias_existentes();
+echo json_encode($categorias);

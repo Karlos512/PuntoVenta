@@ -1,7 +1,7 @@
-Nombre de la empresa
-123456789
-RFC DE LA EMPRESA
-DIRECCION DE LA EMPRESA
-COLONIA DE LA EMPRESA
-55555
-CIUDAD
+Generic Pharma
+5529615945
+OOLL790109JC7
+Av. Tierra y Libertad esq. Av. Cuauhtémoc Pte.
+Emiliano Zapata
+56608
+Chalco de Díaz Covarrubias, Méx.

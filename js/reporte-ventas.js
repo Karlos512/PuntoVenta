@@ -44,13 +44,7 @@ $(document).ready(function () {
     });
     $("li#elem_reportes").addClass("active");
 });
-function consulta_familias(callback) {
-    $.get("./modulos/familias/consultar_familias.php", function (familias) {
-        var f = JSON.parse(familias);
-        llena_select_familias(f);
-        callback();
-    });
-}
+
 function fecha_justo_ahora() {
     var d = new Date($.now());
     var año = d.getFullYear();
@@ -111,7 +105,16 @@ function escuchar_elementos() {
         window.print();
     });
 }
-function llena_select_familias(familias) {
+
+function consulta_familias(callback) {
+    $.get("./modulos/familias/consultar_categorias.php", function (categorias) {
+        var categoria = JSON.parse(categorias);
+        llena_select_familias(categoria);
+        callback();
+    });
+}
+
+function llena_select_familias(categorias) {
     var $contenedorFamilia = $("#familia");
     $contenedorFamilia
         .empty()
@@ -121,11 +124,11 @@ function llena_select_familias(familias) {
                 text: "--Todas--"
             })
         );
-    familias.forEach(function (familia) {
+    categorias.forEach(function (categoria) {
         $contenedorFamilia.append(
             $("<option>", {
-                val: familia.familia,
-                text: familia.familia
+                val: categoria.nombre_categoria,
+                text: categoria.nombre_categoria
             })
         );
     });
@@ -158,7 +161,7 @@ function dibuja_tabla_ventas_por_familia(ventas) {
                 .append(
                     '<tr>' +
                     '<td>' +
-                    (a.familia === "" ? "--Sin familia--" : a.familia) +
+                    (a.familia === "" ? "--Sin Categoría--" : a.familia) +
                     '</td>' +
                     '<td> $' +
                     a.total +

@@ -91,7 +91,7 @@ function dibuja_tabla(productos) {
                                         .html('Cantidad'),
 
                                     $("<th>")
-                                        .html('Familia')
+                                        .html('Categoría')
                                 )
                         )
                 )
@@ -103,6 +103,7 @@ function dibuja_tabla(productos) {
         total_dinero = 0;
     for (var i = total_productos - 1; i >= 0; i--) {
         total_dinero += parseFloat(productos[i].precio_venta);
+        alert('hola');
         $("#contenedor_tabla tbody")
             .append(
                 $("<tr>")

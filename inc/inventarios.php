@@ -7,9 +7,9 @@ if (!isset($_SESSION)) exit("<script>window.location.href = '../';</script>");
         <div class="col-xs-12 col-md-4" id="contenedor_formulario">
             <h4 class="text-center">Registrar nuevo producto</h4>
             <div class="form-group">
-                <label for="id_producto">Id del producto</label>
+                <label for="id_producto">Código</label>
                 <input data-requerido="true" class="form-control" type="text" id="id_producto"
-                       placeholder="Id del producto">
+                       placeholder="Código del producto">
             </div>
             <div class="form-group">
                 <label for="nombre_producto">Nombre del producto</label>
@@ -41,9 +41,23 @@ if (!isset($_SESSION)) exit("<script>window.location.href = '../';</script>");
                        placeholder="Cantidad mínima que puede existir">
             </div>
             <div class="form-group">
-                <label for="stock">Familia o proveedor</label>
-                <input data-requerido="true" class="form-control" type="text" id="familia"
-                       placeholder="Proveedor">
+                <label for="stock">Categoría</label>
+                <select name="categoria" id="familia" data-requerido="true" class="form-control">
+                    <option value="MEDICAMENTO GENERICO">MEDICAMENTO GENÉRICO</option>
+                    <option value="PATENTE">PATENTE</option>
+                    <option value="PERFUMERIA">PERFUMERÍA</option>
+                    <option value="BEBES">BEBES</option>
+                    <option value="CUIDADO INTIMO">CUIDADO INTIMO</option>
+                    <option value="PRODUCTOS DE CURACION">PRODUCTOS DE CURACIÓN</option>
+                    <option value="ROBOTICA">ROBÓTICA</option>
+                    <option value="NATURISTA">NATURISTA</option>
+                    <option value="DULCERIA">DULCERÍA</option>
+                    <option value="REGALOS">REGALOS</option>
+                    <option value="VIDA SEXUAL">VIDA SEXUAL</option>
+                    <option value="PAPELERIA">PAPELERÍA</option>
+                    <option value="CONSULTORIO">CONSULTORIO</option>
+                </select>
+
             </div>
             <div class="row">
                 <div class="col-xs-12">
@@ -76,7 +90,7 @@ if (!isset($_SESSION)) exit("<script>window.location.href = '../';</script>");
                         <th class="text-center">Utilidad</th>
                         <th class="text-center">Existencia</th>
                         <th class="text-center">Existencia mínima</th>
-                        <th class="text-center">Familia</th>
+                        <th class="text-center">Categoría</th>
                         <th class="text-center">Opciones</th>
                     </tr>
                     </thead>
@@ -210,23 +224,20 @@ if (!isset($_SESSION)) exit("<script>window.location.href = '../';</script>");
 
 <script type="text/javascript" src="./js/inventarios.js"></script>
 <script type="text/javascript" src="./lib/np.js"></script>
+
 <script>
 
-    // Show the progress bar 
     NProgress.start();
 
-    // Increase randomly
     var interval = setInterval(function () {
         NProgress.inc();
     }, 1000);
 
-    // Trigger finish when page fully loaded
     jQuery(window).load(function () {
         clearInterval(interval);
         NProgress.done();
     });
 
-    // Trigger bar when exiting the page
     jQuery(window).unload(function () {
         NProgress.start();
     });
