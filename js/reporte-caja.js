@@ -31,22 +31,16 @@ function dibuja_tabla_caja(datos){
 		.append(
 			$( "<thead>" )
 			.append(
-				$( "<tr>" )
+				$( "<tr style='color:white; background-color:#203EA6;'>" )
 				.append(
 					$( "<th>" )
-					.html('Caja chica'),
-					
+					.html('Número de venta'),
+
 					$( "<th>" )
 					.html('Ventas'),
 					
 					$( "<th>" )
-					.html('Gastos'),
-					
-					$( "<th>" )
 					.html('Fecha'),
-					
-					$( "<th>" )
-					.html('Número de venta'),
 					
 					$( "<th>" )
 					.html('Usuario')
@@ -69,11 +63,9 @@ function dibuja_tabla_caja(datos){
 		.append( 
 			$("<tr>")
 			.append(
-				$("<td>").html( (datos[i].caja_chica == 0 ) ? "No aplica" : "$" + datos[i].caja_chica ),
-				$("<td>").html( (datos[i].ventas == 0) ? "No aplica" : "$" + datos[i].ventas ),
-				$("<td>").html( (datos[i].gastos == 0) ? "No aplica" : datos[i].gastos ),
-				$("<td>").html(datos[i].fecha),
 				$("<td>").html( (datos[i].no_venta === "null") ? "No aplica" : datos[i].no_venta ),
+				$("<td>").html( (datos[i].ventas == 0) ? "No aplica" : "$" + datos[i].ventas ),
+				$("<td>").html(datos[i].fecha),
 				$("<td>").html(datos[i].usuario)
 			)
 		);

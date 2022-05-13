@@ -8,7 +8,7 @@ if (!isset($_SESSION)) exit("<script>window.location.href = '../';</script>");
                 <li id="elem_ventas"><a href="./ventas"><i class="fa fa-usd"></i> Ventas</a></li>
                 <li id="elem_inventarios"><a href="./inventarios"><i class="fa fa-book"></i> Inventarios</a></li>
                 <li id="elem_caja"><a href="./caja"><i class="fa fa-money"></i> Caja</a></li>
-                <li id="elem_gastos"><a href="./gastos"><i class="fa fa-calculator"></i> Gastos</a></li>
+                <!-- <li id="elem_gastos"><a href="./gastos"><i class="fa fa-calculator"></i> Gastos</a></li> -->
                 <li id="elem_alta_inventarios"><a href="./alta-de-inventarios"><i class="fa fa-angle-double-up"></i>
                         Actualizar Inventario</a></li>
                 <li id="elem_reportes" class="dropdown">
@@ -18,7 +18,7 @@ if (!isset($_SESSION)) exit("<script>window.location.href = '../';</script>");
                         <li><a href="./reportes-bajas-inventario">Bajas de inventario</a></li>
                         <li><a href="./reportes-caja">Caja</a></li>
                         <li><a href="./reportes-ventas">Ventas</a></li>
-                        <li><a href="./reportes-gastos">Gastos</a></li>
+                        <!-- <li><a href="./reportes-gastos">Gastos</a></li> -->
                         <li><a href="./productos-en-stock">Productos en stock</a></li>
                     </ul>
                 </li>
