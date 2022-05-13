@@ -48,7 +48,7 @@ function consultar_todas_las_ventas($fecha_inicio, $fecha_fin, $familia)
 }
 
 
-function hacer_venta($productos, $total, $ticket, $cambio)
+function hacer_venta($productos, $total, $ticket, $cambio, $neto)
 {
     global $base_de_datos;
     require_once "../inventario/inventario.php";
@@ -60,7 +60,7 @@ function hacer_venta($productos, $total, $ticket, $cambio)
         $resultado_sentencia = $sentencia->execute(array($numero_venta, $producto->codigo, $producto->nombre, $producto->cantidad * $producto->precio_venta , $producto->cantidad, $_SESSION["nombre_de_usuario"], $producto->familia, $producto->utilidad * $producto->cantidad));
         $todo_correcto = $todo_correcto and $resultado_sentencia;
     }
-    $todo_correcto = $todo_correcto and ingresar_dinero_venta_caja($total, $numero_venta);
+    $todo_correcto = $todo_correcto and ingresar_dinero_venta_caja($total, $numero_venta,$neto);
     if ($ticket === TRUE) {
         include "../ticket.php";
         imprime_ticket($productos, $numero_venta, $cambio);
@@ -68,12 +68,12 @@ function hacer_venta($productos, $total, $ticket, $cambio)
     return $todo_correcto;
 }
 
-function ingresar_dinero_venta_caja($total, $numero_venta)
+function ingresar_dinero_venta_caja($total, $numero_venta,$neto)
 {
     global $base_de_datos;
     $usuario = $_SESSION["nombre_de_usuario"];
-    $sentencia = $base_de_datos->prepare("INSERT INTO caja (caja_chica, ventas, gastos, fecha, no_venta, usuario) VALUES (?,?,?,now(),?,?)");
-    $resultado_sentencia = $sentencia->execute([0, $total, 0, $numero_venta, $_SESSION["nombre_de_usuario"]]);
+    $sentencia = $base_de_datos->prepare("INSERT INTO caja (caja_chica, ventas, gastos, fecha, no_venta, usuario,total_neto) VALUES (?,?,?,now(),?,?,?)");
+    $resultado_sentencia = $sentencia->execute([0, $total, 0, $numero_venta, $_SESSION["nombre_de_usuario"],$neto]);
     return $resultado_sentencia;
 }
 

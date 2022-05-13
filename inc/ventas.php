@@ -39,7 +39,7 @@
     </div>
 </div>
 
-
+<!-- -------------------------------------------------------------------------------------------- -->
 <div id="modal_procesar_venta" class="modal fade" role="dialog">
     <div class="modal-dialog">
         <div class="modal-content">
@@ -48,7 +48,32 @@
                 <h4 class="modal-title">Realizar venta</h4>
             </div>
             <div class="modal-body">
-                <h2 hidden="hidden"><strong>Total: </strong><span id="contenedor_total_modal"></span></h2>
+                <!-- ------------------------------------------ -->
+                <div class="row">
+                <div class="form-group">
+                        <div class="col-xs-12 col-md-10">
+                            <label for="pago_usuario">Descuento?</label>
+                            <!-- <input type="number" id="descuento"
+                                   class="form-control"> -->
+                            <select name="descuento" id="descuento" data-requerido="true" class="form-control">
+                                <option value="0">Elige una opción</option>
+                                <option value="0">Sin descuento</option>    
+                                <option value="0.05">5%</option>
+                                <option value="0.10">10%</option>
+                                <option value="0.15">15%</option>
+                                <option value="0.20">20%</option>
+                                <option value="0.25">25%</option>
+                                <option value="0.30">30%</option>
+                                <option value="0.35">35%</option>
+                                <option value="0.40">40%</option>
+                                <option value="0.45">45%</option>
+                                <option value="0.50">50%</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                    <!-- ------------------------------------------ -->
+                
                 <div class="row">
                     <div class="form-group">
                         <div class="col-xs-12 col-md-10">
@@ -57,6 +82,7 @@
                                    class="form-control">
                         </div>
                     </div>
+                    
                     <div class="col-xs-12 col-md-2">
                         <div class="checkbox checkbox-primary checkbox-circle">
                             <input type="checkbox" id="imprimir_ticket">
@@ -66,7 +92,9 @@
                         </div>
                     </div>
                 </div>
-                <h2 hidden="hidden">Cambio: <span id="contenedor_cambio"></span></h2>
+                <h3 hidden="hidden">Subtotal:<span id="contenedor_total_modal"></span></h3>
+                <h3 hidden="hidden"><strong>Total: </strong><span id="contenedor_descuento"></span></h3>
+                <h3 hidden="hidden">Cambio: <span id="contenedor_cambio"></span></h3>
             </div>
             <div class="modal-footer">
                 <div class="row">

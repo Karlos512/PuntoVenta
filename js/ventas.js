@@ -243,6 +243,9 @@ function preparar_para_realizar_venta() {
     if (productos_vender.length > 0) {
         $("#modal_procesar_venta").modal("show");
         $("#contenedor_total_modal").text("$" + total).parent().show();
+        $("#contenedor_descuento").parent().hide();
+        $("#contenedor_cambio").parent().hide();
+        $("$descuento").reset();
     }
 }
 function deshabilita_para_venta() {
@@ -253,7 +256,7 @@ function habilita_para_venta() {
     $("input, button").prop("disabled", false);
     puede_salir = true;
 }
-function realizar_venta(productos, total, cambio, ticket) {
+function realizar_venta(productos, total, cambio, ticket, neto) {
     cambio = parseFloat(cambio);
     if (cambio < 0) cambio = 0;
     deshabilita_para_venta();
@@ -273,7 +276,8 @@ function realizar_venta(productos, total, cambio, ticket) {
         "productos": productos,
         "total": total,
         "ticket": ticket,
-        "cambio": cambio
+        "cambio": cambio,
+        "neto": neto
     }, function (respuesta) {
         habilita_para_venta();
         ayudante_posicion = 0;
@@ -291,6 +295,7 @@ function realizar_venta(productos, total, cambio, ticket) {
             cancelar_venta();
             $("#codigo_producto").focus();
             $("#pago_usuario").val("");
+            $("$descuento").reset();
             $("#contenedor_cambio").parent().hide();
         } else {
             console.log("Error, la respuesta es:", respuesta);
@@ -327,10 +332,23 @@ function escuchar_elementos() {
     $("#cancelar_toda_la_venta").click(function () {
         cancelar_venta();
     });
+
+  
+    
+    $("#descuento").focusout(function() {
+        $(this).parent().removeClass('has-error');
+        var desc = $("#descuento").val(),
+            sudescuento = total-(total * desc);
+            $("#contenedor_descuento").text("$" + sudescuento).parent().show();
+    });
+     
+
     $("#pago_usuario").keyup(function (evento) {
         $(this).parent().removeClass('has-error');
-        var pago = $(this).val(),
-            cambio = pago - total;
+        var pago = $(this).val()
+            desc= $("#descuento").val(),
+            neto = total-(total*desc);
+            cambio = pago - (total-(total*desc));
         if (cambio >= 0 && !isNaN(pago)) {
             $("#contenedor_cambio").text("$" + cambio).parent().show();
         } else {
@@ -338,7 +356,7 @@ function escuchar_elementos() {
         }
         if (evento.keyCode === 13) {
             if (cambio >= 0 && !isNaN(pago)) {
-                realizar_venta(productos_vender, total, cambio, $("#imprimir_ticket").prop("checked"));
+                realizar_venta(productos_vender, total, cambio, $("#imprimir_ticket").prop("checked"),neto);
             } else {
                 $(this).animateCss("shake");
                 $(this).parent().addClass('has-error');
@@ -346,11 +364,14 @@ function escuchar_elementos() {
         }
     });
 
+
     $("#realizar_venta").click(function () {
         var pago = $("#pago_usuario").val(),
+            cantDes = $("#descuento").val();
             cambio = pago - total;
+            neto = total - (total*cantDes);
         if (cambio >= 0 && !isNaN(pago)) {
-            realizar_venta(productos_vender, total, cambio, $("#imprimir_ticket").prop("checked"));
+            realizar_venta(productos_vender, total, cambio, $("#imprimir_ticket").prop("checked"),neto);
         } else {
             $("#pago_usuario").animateCss("shake");
             $("#pago_usuario").parent().addClass('has-error');
@@ -359,11 +380,13 @@ function escuchar_elementos() {
 
 
     $("#modal_procesar_venta").on("shown.bs.modal", function () {
-        $("#pago_usuario").focus();
+        $("#descuento").focus();
+        // $("#pago_usuario").focus();
     });
     $("#modal_procesar_venta").on("hidden.bs.modal", function () {
         $("#realizar_venta").html("Realizar venta");
         $("#pago_usuario").val("").parent().removeClass('has-error');
+        $("#descuento").reset();
         $("#codigo_producto").focus();
     });
     $("#codigo_producto").keydown(function (evento) {

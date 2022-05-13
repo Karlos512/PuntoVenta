@@ -5,7 +5,7 @@ if (!isset($_SESSION)) exit("<script>window.location.href = '../';</script>");
 <html>
 <head>
     <title>FARMACIA</title>
-    <link rel="icon" type="image/png" href="./img/favicon.png"/>
+    <link rel="icon" type="image/gif" href="./img/validate.gif"/>
     <link href="./css/animate.css" rel="stylesheet">
     <link href="./css/np.css" rel="stylesheet">
     <link href="./css/pnotify.css" rel="stylesheet">
