@@ -40,9 +40,9 @@ function consultar_todos_los_productos_en_stock($familia)
 {
     global $base_de_datos;
     if ($familia === "*") {
-        $sql = "SELECT codigo, nombre, existencia, stock, familia FROM inventario WHERE existencia < stock ORDER BY existencia DESC";
+        $sql = "SELECT codigo, nombre, existencia, stock, familia FROM inventario WHERE existencia < 5 ORDER BY existencia DESC";
     } else {
-        $sql = "SELECT codigo, nombre, existencia, stock, familia FROM inventario WHERE existencia < stock AND familia = ? ORDER BY existencia DESC";
+        $sql = "SELECT codigo, nombre, existencia, stock, familia FROM inventario WHERE existencia < 5 AND familia = ? ORDER BY existencia DESC";
     }
     $sentencia = $base_de_datos->prepare($sql);
     if ($familia === "*") $sentencia->execute();
@@ -73,8 +73,8 @@ function dar_baja($rowid, $numero_piezas, $razon_baja, $usuario)
     $datos_producto = consultar_producto($rowid);
     $codigo_producto = $datos_producto["codigo"];
     $nombre_producto = $datos_producto["nombre"];
-    $sentencia = $base_de_datos->prepare("INSERT INTO bajas_inventario (codigo_producto, nombre_producto, numero_piezas, razon_baja, usuario, fecha) VALUES (?, ?, ?, ?, ?, ?);");
-    $resultado_sentencia = $sentencia->execute([$codigo_producto, $nombre_producto, $numero_piezas, $razon_baja, $usuario, date("Y-m-d H:i:s")]);
+    $sentencia = $base_de_datos->prepare("INSERT INTO bajas_inventario (codigo_producto, nombre_producto, numero_piezas, razon_baja, usuario, fecha) VALUES (?, ?, ?, ?, ?, now());");
+    $resultado_sentencia = $sentencia->execute([$codigo_producto, $nombre_producto, $numero_piezas, $razon_baja, $usuario]);
     return $resultado_sentencia and retirar_producto($rowid, $numero_piezas);
 }
 

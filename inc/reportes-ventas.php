@@ -41,10 +41,10 @@ if (!isset($_SESSION)) exit("<script>window.location.href = '../';</script>");
 </div>
 <div class="row">
     <div class="col-xs-6">
-        <h2 class="text-center" hidden="hidden"><strong>Total:</strong> $<span id="mostrar_total"></span></h2>
+        <h2 class="text-center" hidden="hidden"><strong>Total Ventas:</strong> $<span id="mostrar_total"></span></h2>
     </div>
     <div class="col-xs-6">
-        <h2 class="text-center" hidden="hidden"><strong>Utilidad:</strong> $<span id="mostrar_utilidad"></span></h2>
+        <h2 class="text-center" hidden="hidden"><strong>Total Descuentos:</strong> $<span id="mostrar_utilidad"></span></h2>
     </div>
 </div>
 

@@ -6,7 +6,7 @@ function Producto(numero, nombre) {
     this.nombre = nombre;
 }
 
-function Venta(numero_venta, fecha, nombre_producto, numero_productos, total, usuario, familia, utilidad) {
+function Venta(numero_venta, fecha, nombre_producto, numero_productos, total, usuario, familia, utilidad,descuento_venta,neto) {
     this.numero_venta = numero_venta;
     this.fecha = fecha;
     this.lista_productos = [];
@@ -16,6 +16,9 @@ function Venta(numero_venta, fecha, nombre_producto, numero_productos, total, us
     this.usuario = usuario;
     this.familia = familia;
     this.utilidad = utilidad;
+    this.descuento_venta = descuento_venta;
+    this.neto = neto;
+
 }
 
 Venta.prototype.agrega_producto_lista = function (numero_productos, nombre_producto) {
@@ -242,10 +245,16 @@ function dibuja_tabla_ventas(ventas) {
                                         .html('Número de productos'),
 
                                     $("<th>")
-                                        .html('Total'),
+                                        .html('SubTotal'),
 
-                                    $("<th>")
-                                        .html('Utilidad'),
+                                    // $("<th>")
+                                    //     .html('Descuento Venta'),
+                                    
+                                    // $("<th>")
+                                    //     .html('Total Neto'),
+
+                                    // $("<th>")
+                                    //     .html('Utilidad'),
 
                                     $("<th>")
                                         .html('Usuario')
@@ -260,14 +269,34 @@ function dibuja_tabla_ventas(ventas) {
         numero_productos = 0.0;
     var ventas_totales = [];
     var subtotal = 0,
-        subtotal_utilidad = 0;
+        subtotal_utilidad = 0,
+        TotalNeto  = 0,
+        TotalDesc = 0,
+        subtotal_desc = 0;
     for (var i = ventas.length - 1; i >= 0; i--) {
         subtotal = ventas[i].total;
         subtotal_utilidad = ventas[i].utilidad;
+        subtotal_desc = ventas[i].descuento_venta;
+
+        // alert('valor i '+i);
+        TotalNeto = TotalNeto + parseFloat(ventas[i].neto);
+        TotalDesc = TotalDesc + parseFloat(ventas[i].descuento_venta);
+
+        
+
+        // alert('pre '+ subtotal +' '+subneto+' des '+subtotal_desc);
+
         if (ayudante_numero_venta === ventas[i].numero_venta) {
             var posicion = dame_posicion_venta(ventas_totales, ventas[i].numero_venta);
+            // alert('valor pos '+ posicion);
             ventas_totales[posicion].agrega_producto_lista(ventas[i].numero_productos, ventas[i].nombre_producto);
+            
+            //
+            ventas_totales[posicion].descuento_venta = parseFloat(ventas_totales[posicion].descuento_venta) + parseFloat(ventas[i].descuento_venta);;
+            //
+
             ventas_totales[posicion].total = parseFloat(ventas_totales[posicion].total) + parseFloat(subtotal);
+            
             ventas_totales[posicion].utilidad = parseFloat(ventas_totales[posicion].utilidad) + parseFloat(subtotal_utilidad);
             numero_productos += parseFloat(ventas[i].numero_productos);
         } else {
@@ -280,6 +309,7 @@ function dibuja_tabla_ventas(ventas) {
                     subtotal,
                     ventas[i].usuario,
                     ventas[i].familia,
+                    parseFloat(ventas[i].descuento_venta),
                     subtotal_utilidad
                 )
             );
@@ -287,8 +317,8 @@ function dibuja_tabla_ventas(ventas) {
         }
     }
     for (var i = ventas_totales.length - 1; i >= 0; i--) {
-        ayudante_total += parseFloat(ventas_totales[i].total);
-        ayudante_utilidad += parseFloat(ventas_totales[i].utilidad);
+        ayudante_total += (parseFloat(ventas_totales[i].total) - ventas_totales[i].descuento_venta);
+        ayudante_utilidad += (parseFloat(ventas_totales[i].utilidad)-ventas_totales[i].descuento_venta);
         $("#contenedor_tabla tbody")
             .append(
                 $("<tr>")
@@ -298,13 +328,17 @@ function dibuja_tabla_ventas(ventas) {
                         $("<td>").html(ventas_totales[i].productos_como_html()),
                         $("<td>").html(ventas_totales[i].numero_productos),
                         $("<td>").html("$" + ventas_totales[i].total),
-                        $("<td>").html("$" + ventas_totales[i].utilidad),
+                        
+                        // $("<td>").html("$" + ventas_totales[i].descuento_venta),
+                        // $("<td>").html("$" + (ventas_totales[i].total)),
+                        
+                        // $("<td>").html("$" + (ventas_totales[i].utilidad)),
                         $("<td>").html(ventas_totales[i].usuario)
                     )
             );
     }
     $("#contenedor_tabla").animateCss("fadeInUp");
-    $("#mostrar_total").text(ayudante_total).parent().show();
-    $("#mostrar_utilidad").text(ayudante_utilidad).parent().show();
+    $("#mostrar_total").text(TotalNeto).parent().show();
+    $("#mostrar_utilidad").text(TotalDesc).parent().show();
     $("#generar_reporte").show();
 }

@@ -59,7 +59,7 @@ function dibujar_tabla(datos) {
                     $("<td>").html(datos[x].codigo),
                     $("<td>").html(datos[x].nombre),
                     $("<td>").html(datos[x].existencia),
-                    $("<td>").html(datos[x].stock),
+                    // $("<td>").html(datos[x].stock),
                     $("<td>").html(datos[x].familia)
                 )
         );

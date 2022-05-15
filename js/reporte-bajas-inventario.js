@@ -28,7 +28,7 @@ function escuchar_elementos(){
 }
 
 function dibuja_tabla_bajas_inventario(datos){
-	$( "#generar_reporte" ).hide();
+	$( "#generar_reporte" ).show();
 	$( "#contenedor_tabla" )
 	.empty();
 	if (datos.length <= 0) return;

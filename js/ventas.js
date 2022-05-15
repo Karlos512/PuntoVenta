@@ -256,7 +256,7 @@ function habilita_para_venta() {
     $("input, button").prop("disabled", false);
     puede_salir = true;
 }
-function realizar_venta(productos, total, cambio, ticket, neto) {
+function realizar_venta(productos, total, cambio, ticket, neto,descuentov) {
     cambio = parseFloat(cambio);
     if (cambio < 0) cambio = 0;
     deshabilita_para_venta();
@@ -277,7 +277,8 @@ function realizar_venta(productos, total, cambio, ticket, neto) {
         "total": total,
         "ticket": ticket,
         "cambio": cambio,
-        "neto": neto
+        "neto": neto,
+        "descuentov":descuentov
     }, function (respuesta) {
         habilita_para_venta();
         ayudante_posicion = 0;
@@ -356,7 +357,7 @@ function escuchar_elementos() {
         }
         if (evento.keyCode === 13) {
             if (cambio >= 0 && !isNaN(pago)) {
-                realizar_venta(productos_vender, total, cambio, $("#imprimir_ticket").prop("checked"),neto);
+                realizar_venta(productos_vender, total, cambio, $("#imprimir_ticket").prop("checked"),neto,desc);
             } else {
                 $(this).animateCss("shake");
                 $(this).parent().addClass('has-error');
@@ -371,7 +372,7 @@ function escuchar_elementos() {
             cambio = pago - total;
             neto = total - (total*cantDes);
         if (cambio >= 0 && !isNaN(pago)) {
-            realizar_venta(productos_vender, total, cambio, $("#imprimir_ticket").prop("checked"),neto);
+            realizar_venta(productos_vender, total, cambio, $("#imprimir_ticket").prop("checked"),neto,cantDes);
         } else {
             $("#pago_usuario").animateCss("shake");
             $("#pago_usuario").parent().addClass('has-error');

@@ -37,7 +37,10 @@ function dibuja_tabla_caja(datos){
 					.html('Número de venta'),
 
 					$( "<th>" )
-					.html('Ventas'),
+					.html('Ventas Bruta'),
+
+					$( "<th>" )
+					.html('Ventas Neta'),
 					
 					$( "<th>" )
 					.html('Fecha'),
@@ -52,11 +55,13 @@ function dibuja_tabla_caja(datos){
 		)
 	);
 	var ayudante_ventas = 0,
+		ayudante_ventas_netas = 0,
 		ayudante_gastos = 0,
 		ayudante_caja_chica = 0,
 		ayudante_total = 0;
 	for (var i = datos.length - 1; i >= 0; i--) {
 		ayudante_ventas += parseFloat( datos[i].ventas );
+		ayudante_ventas_netas += parseFloat( datos[i].total_neto );
 		ayudante_gastos += parseFloat( datos[i].gastos );
 		ayudante_caja_chica += parseFloat( datos[i].caja_chica );
 		$( "#contenedor_tabla tbody" )
@@ -65,6 +70,7 @@ function dibuja_tabla_caja(datos){
 			.append(
 				$("<td>").html( (datos[i].no_venta === "null") ? "No aplica" : datos[i].no_venta ),
 				$("<td>").html( (datos[i].ventas == 0) ? "No aplica" : "$" + datos[i].ventas ),
+				$("<td style='background-color:#30D73C';>").html( (datos[i].ventas == 0) ? "No aplica" : "$" + datos[i].total_neto ),
 				$("<td>").html(datos[i].fecha),
 				$("<td>").html(datos[i].usuario)
 			)
@@ -75,13 +81,16 @@ function dibuja_tabla_caja(datos){
 	ayudante_caja_chica = Math.round( ayudante_caja_chica * 100 ) / 100;
 	ayudante_gastos = Math.round( ayudante_gastos * 100 ) / 100;
 	ayudante_ventas = Math.round( ayudante_ventas * 100 ) / 100;
+	ayudante_ventas_netas = Math.round( ayudante_ventas_netas * 100 ) / 100;
 	var ayudante_utilidad = ayudante_ventas - ayudante_gastos;
 	ayudante_utilidad = Math.round( ayudante_utilidad *100 ) / 100;
 	console.log('ayudante_total ' , ayudante_total);
 	$("#caja_chica").text(ayudante_caja_chica).parent().show();
 	$("#gastos").text(ayudante_gastos).parent().show();
+	//////////////////////////////////////////////////////
 	$("#ventas").text(ayudante_ventas).parent().show();
-	$("#total_caja").text(ayudante_total).parent().show();
+	$("#total_caja").text(ayudante_ventas_netas).parent().show();
+	///////////////////////////////////////////////////
 	$("#utilidad").text(ayudante_utilidad).parent().show();
 	$( "#generar_reporte" ).show();
 	return;
