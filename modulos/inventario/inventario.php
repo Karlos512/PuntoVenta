@@ -89,12 +89,12 @@ function retirar_producto($rowid, $cantidad)
 }
 
 
-function editar_producto($codigo_producto, $nombre_producto, $precio_compra, $precio_venta, $utilidad, $existencia, $stock, $familia, $rowid)
+function editar_producto($codigo_producto, $nombre_producto, $precio_compra, $precio_venta, $utilidad, $existencia, $familia, $rowid)// stock
 {
     if (existe_codigo_producto($codigo_producto, $rowid)) return 2;
     global $base_de_datos;
-    $sentencia = $base_de_datos->prepare("UPDATE inventario SET codigo = ?, nombre = ?, precio_compra = ?, precio_venta = ?, utilidad = ?, existencia = ?, stock = ?, familia = ? WHERE rowid = ?");
-    $resultado_sentencia = $sentencia->execute([$codigo_producto, $nombre_producto, $precio_compra, $precio_venta, $utilidad, $existencia, $stock, $familia, $rowid]);
+    $sentencia = $base_de_datos->prepare("UPDATE inventario SET codigo = ?, nombre = ?, precio_compra = ?, precio_venta = ?, utilidad = ?, existencia = ?, stock = 1, familia = ? WHERE rowid = ?");
+    $resultado_sentencia = $sentencia->execute([$codigo_producto, $nombre_producto, $precio_compra, $precio_venta, $utilidad, $existencia, $familia, $rowid]);
     if ($resultado_sentencia) return 0;
     else return 1;
 }

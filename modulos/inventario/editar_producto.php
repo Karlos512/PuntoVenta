@@ -16,7 +16,6 @@ $resultado = editar_producto(
     $datos_producto[4],
     $datos_producto[5],
     $datos_producto[6],
-    $datos_producto[7],
-    $datos_producto[8]
+    $datos_producto[7]
 );
 echo json_encode($resultado);
