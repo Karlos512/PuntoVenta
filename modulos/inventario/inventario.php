@@ -193,7 +193,7 @@ function consultar_numero_total_productos_busqueda($busqueda)
 }
 
 
-function insertar_producto($codigo_producto, $nombre_producto, $precio_compra, $precio_venta, $utilidad, $inventario_inicial, $stock, $familia)
+function insertar_producto($codigo_producto, $nombre_producto, $precio_compra, $precio_venta, $utilidad, $inventario_inicial, $familia) //, $stock
 {
     if (existe_codigo_producto($codigo_producto)) return 2;
     global $base_de_datos;
@@ -201,9 +201,9 @@ function insertar_producto($codigo_producto, $nombre_producto, $precio_compra, $
 	INSERT INTO inventario 
 	(codigo, nombre, precio_compra, precio_venta, utilidad, existencia, stock, familia)
 	VALUES
-	(?,?,?,?,?,?,?,?);
+	(?,?,?,?,?,?,1,?);
 	");
-    $resultado_sentencia = $sentencia->execute([$codigo_producto, $nombre_producto, $precio_compra, $precio_venta, $utilidad, $inventario_inicial, $stock, $familia]);
+    $resultado_sentencia = $sentencia->execute([$codigo_producto, $nombre_producto, $precio_compra, $precio_venta, $utilidad, $inventario_inicial, $familia]);
     if ($resultado_sentencia === TRUE) return 0;
     return 1;
 }

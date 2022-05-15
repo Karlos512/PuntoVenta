@@ -148,7 +148,7 @@ function llenar_formulario_para_editar(datos_producto) {
     $("#precio_compra").val(datos_producto.precio_compra);
     $("#precio_venta").val(datos_producto.precio_venta);
     $("#inventario").attr("placeholder", "Cantidad").val(datos_producto.existencia);
-    $("#stock").val(datos_producto.stock);
+    // $("#stock").val(datos_producto.stock);
     $("#familia").val(datos_producto.familia);
     $("#contenedor_formulario").animateCss("rubberBand");
 }
@@ -573,7 +573,7 @@ function insertar_producto() {
             precio_compra = $("#precio_compra").val(),
             precio_venta = $("#precio_venta").val(),
             inventario_inicial = $("#inventario").val(),
-            stock = $("#stock").val(),
+            // stock = $("#stock").val(),
             familia = $("#familia").val(),
             datos_producto = [],
             utilidad = precio_venta - precio_compra;
@@ -588,9 +588,8 @@ function insertar_producto() {
             precio_venta,
             utilidad,
             inventario_inicial,
-            stock,
             familia
-        );
+        ); //stock
         var ruta = "./modulos/inventario/insertar_producto.php",
             texto_resultado = "<i class='fa fa-spinner fa-spin'></i> Registrando producto...";
         if (esta_editando) {

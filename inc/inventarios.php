@@ -35,11 +35,11 @@ if (!isset($_SESSION)) exit("<script>window.location.href = '../';</script>");
                 <input data-requerido="true" class="form-control" type="number" id="inventario"
                        placeholder="Inventario inicial">
             </div>
-            <div class="form-group">
+            <!-- <div class="form-group">
                 <label for="stock">Cantidad en stock</label>
                 <input data-requerido="true" class="form-control" type="number" id="stock"
                        placeholder="Cantidad mínima que puede existir">
-            </div>
+            </div> -->
             <div class="form-group">
                 <label for="stock">Categoría</label>
                 <select name="categoria" id="familia" data-requerido="true" class="form-control">

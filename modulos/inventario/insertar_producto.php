@@ -15,8 +15,7 @@ $resultado = insertar_producto(
 		$datos_producto[3], 
 		$datos_producto[4], 
 		$datos_producto[5],
-		$datos_producto[6],
-		$datos_producto[7]
+		$datos_producto[6]	
 	);
 echo json_encode( $resultado );
 ?>
