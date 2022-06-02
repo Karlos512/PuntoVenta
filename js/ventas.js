@@ -30,17 +30,18 @@ $(document)
     });
 
 
-function Producto(rowid, codigo, nombre, cantidad, precio, posicion, familia, precio_compra) {
+function Producto(rowid, codigo, nombre, cantidad, precio, posicion, familia, precio_compra,descuentoxproducto) {
     this.rowid = rowid;
     this.codigo = codigo;
     this.nombre = nombre;
     this.cantidad = cantidad;
     this.precio_venta = parseFloat(precio);
     this.posicion = posicion;
-    this.total = this.cantidad * this.precio_venta;
+    this.descuentoxproducto = descuentoxproducto;
+    this.total = (this.cantidad * this.precio_venta) - ( (this.cantidad * this.precio_venta) * (this.descuentoxproducto * 0.01));
     this.familia = familia;
     this.precio_compra = parseFloat(precio_compra);
-    this.utilidad = (this.precio_venta - this.precio_compra >= 0 ? this.precio_venta - this.precio_compra : 0 );
+    this.utilidad = (this.precio_venta - this.precio_compra >= 0 ? this.precio_venta - this.precio_compra : 0 );    
 };
 
 
@@ -56,9 +57,19 @@ Producto.prototype.setCantidad = function (cantidad) {
 };
 
 Producto.prototype.refrescaTotal = function () {
-    this.total = this.cantidad * this.precio_venta;
+    this.total = (this.cantidad * this.precio_venta) - ( (this.cantidad * this.precio_venta) * (this.descuentoxproducto * 0.01));
 };
 
+//////////////////////////////refrescar nuevo valor de descuento////////////////////
+Producto.prototype.setNuevoDescuento = function (descuentoxproducto) {
+    this.descuentoxproducto = parseFloat(descuentoxproducto);
+    this.refrescaDescuento();
+};
+
+Producto.prototype.refrescaDescuento = function () {
+    this.total = (this.cantidad * this.precio_venta) - ( (this.cantidad * this.precio_venta) * (this.descuentoxproducto * 0.01));
+};
+////////////////////////////////////////////////////////////////////////////////
 
 function isInt(n) {
     return n % 1 === 0;
@@ -106,11 +117,12 @@ function agrega_producto_local(producto) {
             producto.rowid,
             producto.codigo,
             producto.nombre,
-            1,
+            1,// cantitdad inicial de producto a comprar
             producto.precio_venta,
             ayudante_posicion,
             producto.familia,
-            producto.precio_compra
+            producto.precio_compra,
+            0 // descuento por default
         );
         productos_vender.push(_producto);
         ayudante_posicion++;
@@ -174,6 +186,9 @@ function dibujar_productos() {
 
                                     $("<th>")
                                         .html('Cantidad'),
+                                    
+                                    $("<th>")
+                                        .html('Descuento'),
 
                                     $("<th>")
                                         .html('Total'),
@@ -187,9 +202,13 @@ function dibujar_productos() {
                     $("<tbody>")
                 )
         );
+        
     var ayudante_total = 0;
     for (var i = productos_vender.length - 1; i >= 0; i--) {
         ayudante_total += productos_vender[i].total;
+        console.log(ayudante_total);
+        console.log(productos_vender[i]);
+
         $("#contenedor_tabla tbody")
             .append(
                 $("<tr>")
@@ -216,7 +235,26 @@ function dibujar_productos() {
                                             .val(productos_vender[i].cantidad)
                                     )
                             ),
-
+                        
+                        // 
+                        $("<td>")
+                            .html(
+                                $("<div>")
+                                    .addClass('form-group')
+                                    .html(
+                                        $("<input>")
+                                            .addClass('form-control modificar-descuento')
+                                            .attr("placeholder", "Descuento")
+                                            .attr("type", "number")
+                                            .attr("min", "0")
+                                            .attr("max", "50")
+                                            .attr("step","5")
+                                            .attr("data-pos", productos_vender[i].posicion)
+                                            .val(productos_vender[i].descuentoxproducto)
+                                )
+                            ),
+                        // 
+                                                //total por producto
                         $("<td>")
                             .html("$" + Math.round(productos_vender[i].total * 100) / 100),
 
@@ -243,9 +281,8 @@ function preparar_para_realizar_venta() {
     if (productos_vender.length > 0) {
         $("#modal_procesar_venta").modal("show");
         $("#contenedor_total_modal").text("$" + total).parent().show();
-        $("#contenedor_descuento").parent().hide();
         $("#contenedor_cambio").parent().hide();
-        $("$descuento").reset();
+        
     }
 }
 function deshabilita_para_venta() {
@@ -256,7 +293,7 @@ function habilita_para_venta() {
     $("input, button").prop("disabled", false);
     puede_salir = true;
 }
-function realizar_venta(productos, total, cambio, ticket, neto,descuentov) {
+function realizar_venta(productos, total, cambio, ticket, neto) {
     cambio = parseFloat(cambio);
     if (cambio < 0) cambio = 0;
     deshabilita_para_venta();
@@ -277,8 +314,7 @@ function realizar_venta(productos, total, cambio, ticket, neto,descuentov) {
         "total": total,
         "ticket": ticket,
         "cambio": cambio,
-        "neto": neto,
-        "descuentov":descuentov
+        "neto": neto
     }, function (respuesta) {
         habilita_para_venta();
         ayudante_posicion = 0;
@@ -334,30 +370,22 @@ function escuchar_elementos() {
         cancelar_venta();
     });
 
-  
-    
-    $("#descuento").focusout(function() {
-        $(this).parent().removeClass('has-error');
-        var desc = $("#descuento").val(),
-            sudescuento = total-(total * desc);
-            $("#contenedor_descuento").text("$" + sudescuento).parent().show();
-    });
      
 
     $("#pago_usuario").keyup(function (evento) {
         $(this).parent().removeClass('has-error');
         var pago = $(this).val()
-            desc= $("#descuento").val(),
-            neto = total-(total*desc);
-            cambio = pago - (total-(total*desc));
+            neto = total;
+            cambio = pago - total;
         if (cambio >= 0 && !isNaN(pago)) {
             $("#contenedor_cambio").text("$" + cambio).parent().show();
+            $("#contenedor_descuento").text("$" + neto).parent().show();
         } else {
             $("#contenedor_cambio").parent().hide();
         }
         if (evento.keyCode === 13) {
             if (cambio >= 0 && !isNaN(pago)) {
-                realizar_venta(productos_vender, total, cambio, $("#imprimir_ticket").prop("checked"),neto,desc);
+                realizar_venta(productos_vender, total, cambio, $("#imprimir_ticket").prop("checked"),neto);
             } else {
                 $(this).animateCss("shake");
                 $(this).parent().addClass('has-error');
@@ -368,11 +396,10 @@ function escuchar_elementos() {
 
     $("#realizar_venta").click(function () {
         var pago = $("#pago_usuario").val(),
-            cantDes = $("#descuento").val();
             cambio = pago - total;
-            neto = total - (total*cantDes);
+            neto = total;
         if (cambio >= 0 && !isNaN(pago)) {
-            realizar_venta(productos_vender, total, cambio, $("#imprimir_ticket").prop("checked"),neto,cantDes);
+            realizar_venta(productos_vender, total, cambio, $("#imprimir_ticket").prop("checked"),neto);
         } else {
             $("#pago_usuario").animateCss("shake");
             $("#pago_usuario").parent().addClass('has-error');
@@ -381,15 +408,14 @@ function escuchar_elementos() {
 
 
     $("#modal_procesar_venta").on("shown.bs.modal", function () {
-        $("#descuento").focus();
-        // $("#pago_usuario").focus();
+         $("#pago_usuario").focus();
     });
     $("#modal_procesar_venta").on("hidden.bs.modal", function () {
         $("#realizar_venta").html("Realizar venta");
         $("#pago_usuario").val("").parent().removeClass('has-error');
-        $("#descuento").reset();
         $("#codigo_producto").focus();
     });
+
     $("#codigo_producto").keydown(function (evento) {
         if (evento.ctrlKey) evento.preventDefault();
         switch (evento.keyCode) {
@@ -414,6 +440,7 @@ function escuchar_elementos() {
         }
     });
 
+    //////////////////////////////////////////////////////////////////////////////////////////
     $(document).on("keyup", ".modificar-cantidad", function (evento) {
         $(this).parent().removeClass('has-error');
         if (evento.keyCode === 13) {
@@ -454,7 +481,7 @@ function escuchar_elementos() {
         }
     });
 
-
+    /////////////////////////////////////////////////////////////////////////////////////////////
     $(document).on("click", ".quitar-producto", function () {
         var posicion = $(this).data("pos");
         quita_producto_local(posicion);
@@ -522,3 +549,78 @@ function comprueba_si_existe_codigo(codigo) {
     });
 }
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+//////////////////////////////////////// modificar total con descuento //////////////////////////////
+
+ $(document).on("keyup", ".modificar-descuento", function (evento) {
+    // $('.modificar-descuento').on('change', function (){
+    $(this).parent().removeClass('has-error');
+    if (evento.keyCode === 13) {
+        var nueva_totaldes = $(this).val(),
+            posicion = dame_posicion_producto($(this).data("pos"));
+            console.log(nueva_totaldes);
+        if (
+            nueva_totaldes.length > 0
+            && nueva_totaldes > 0
+            && !isNaN(nueva_totaldes)
+        ) {
+            productos_vender[posicion].setNuevoDescuento(nueva_totaldes);
+            dibujar_productos();
+            $("#codigo_producto").focus();
+        } 
+        else {
+            nueva_totaldes=0;
+            productos_vender[posicion].setNuevoDescuento(nueva_totaldes);
+            dibujar_productos();
+        }
+    }
+
+});
+
+ $(document).on("mouseout", ".modificar-descuento", function () {
+    $(this).parent().removeClass('has-error');
+    var nueva_totaldes = $(this).val(),
+        posicion = dame_posicion_producto($(this).data("pos"));
+        console.log(nueva_totaldes);
+
+        if (
+        nueva_totaldes.length > 0
+        && nueva_totaldes > 0
+        && !isNaN(nueva_totaldes)
+    ) {
+        productos_vender[posicion].setNuevoDescuento(nueva_totaldes);
+        dibujar_productos();
+        $(this).focus();
+    }else {
+        nueva_totaldes=0;
+        productos_vender[posicion].setNuevoDescuento(nueva_totaldes);
+        dibujar_productos();
+    }
+
+
+
+ });

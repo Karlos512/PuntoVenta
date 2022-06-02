@@ -49,12 +49,13 @@
             </div>
             <div class="modal-body">
                 <!-- ------------------------------------------ -->
-                <div class="row">
+                <!-- <div class="row">
                 <div class="form-group">
                         <div class="col-xs-12 col-md-10">
                             <label for="pago_usuario">Descuento?</label>
-                            <!-- <input type="number" id="descuento"
-                                   class="form-control"> -->
+                           
+                              <input type="number" id="descuento"
+                                   class="form-control"> 
                             <select name="descuento" id="descuento" data-requerido="true" class="form-control">
                                 <option value="0">Elige una opción</option>
                                 <option value="0">Sin descuento</option>    
@@ -71,7 +72,7 @@
                             </select>
                         </div>
                     </div>
-                </div>
+                </div> -->
                     <!-- ------------------------------------------ -->
                 
                 <div class="row">

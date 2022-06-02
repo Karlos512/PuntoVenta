@@ -128,6 +128,7 @@ if (!isset($_SESSION)) exit("<script>window.location.href = '../';</script>");
             </div>
             <div class="modal-body">
                 <p class="h5">¿Realmente deseas eliminar el producto? Esta opción no se puede deshacer.</p>
+                <h4 id="contenedor_datos"></h4>
             </div>
             <div class="modal-footer">
                 <div class="row">

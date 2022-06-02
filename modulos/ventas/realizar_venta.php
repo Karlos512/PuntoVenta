@@ -15,7 +15,7 @@ $cambio = $_POST["cambio"];
 $ticket = $_POST["ticket"];
 $ticket = json_decode($ticket);
 $neto = $_POST["neto"];
-$descuentov = $_POST["descuentov"];
-$resultado = hacer_venta( $productos, $total, $ticket, $cambio, $neto, $descuentov);
+// $descuentov = $_POST["descuentov"];
+$resultado = hacer_venta( $productos, $total, $ticket, $cambio, $neto);
 echo json_encode($resultado);
 ?>

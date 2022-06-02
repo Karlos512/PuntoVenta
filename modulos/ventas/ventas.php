@@ -48,7 +48,7 @@ function consultar_todas_las_ventas($fecha_inicio, $fecha_fin, $familia)
 }
 
 
-function hacer_venta($productos, $total, $ticket, $cambio, $neto,$descuentov)
+function hacer_venta($productos, $total, $ticket, $cambio, $neto)
 {
     global $base_de_datos;
     require_once "../inventario/inventario.php";
@@ -57,7 +57,7 @@ function hacer_venta($productos, $total, $ticket, $cambio, $neto,$descuentov)
     foreach ($productos as $producto) {
         $todo_correcto = $todo_correcto and quitar_piezas($producto->cantidad, $producto->rowid);
         $sentencia = $base_de_datos->prepare("INSERT INTO ventas(numero_venta, codigo_producto, nombre_producto, total, fecha, numero_productos, usuario, familia, utilidad,neto,descuento_venta) VALUES (?,?,?,?,now(),?,?, ?, ?,?,?);");
-        $resultado_sentencia = $sentencia->execute(array($numero_venta, $producto->codigo, $producto->nombre, $producto->cantidad * $producto->precio_venta , $producto->cantidad, $_SESSION["nombre_de_usuario"], $producto->familia, $producto->utilidad * $producto->cantidad,(($producto->cantidad * $producto->precio_venta)-(($producto->cantidad * $producto->precio_venta)*$descuentov)),(($producto->cantidad * $producto->precio_venta)*$descuentov)));
+        $resultado_sentencia = $sentencia->execute(array($numero_venta, $producto->codigo, $producto->nombre, $producto->cantidad * $producto->precio_venta , $producto->cantidad, $_SESSION["nombre_de_usuario"], $producto->familia, $producto->utilidad * $producto->cantidad,(($producto->cantidad * $producto->precio_venta)-(($producto->cantidad * $producto->precio_venta)* ($producto->descuentoxproducto*0.01))),(($producto->cantidad * $producto->precio_venta)*($producto->descuentoxproducto*0.01))));
         $todo_correcto = $todo_correcto and $resultado_sentencia;
     }
     $todo_correcto = $todo_correcto and ingresar_dinero_venta_caja($total, $numero_venta,$neto);

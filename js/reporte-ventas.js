@@ -247,11 +247,11 @@ function dibuja_tabla_ventas(ventas) {
                                     $("<th>")
                                         .html('SubTotal'),
 
-                                    // $("<th>")
-                                    //     .html('Descuento Venta'),
+                                    $("<th>")
+                                        .html('Descuento Venta'),
                                     
-                                    // $("<th>")
-                                    //     .html('Total Neto'),
+                                    $("<th>")
+                                        .html('Total Neto'),
 
                                     // $("<th>")
                                     //     .html('Utilidad'),
@@ -272,33 +272,35 @@ function dibuja_tabla_ventas(ventas) {
         subtotal_utilidad = 0,
         TotalNeto  = 0,
         TotalDesc = 0,
-        subtotal_desc = 0;
+        subtotal_desc = 0,
+        subtotal_neto = 0;
     for (var i = ventas.length - 1; i >= 0; i--) {
         subtotal = ventas[i].total;
         subtotal_utilidad = ventas[i].utilidad;
         subtotal_desc = ventas[i].descuento_venta;
+        subtotal_neto = ventas[i].neto;
 
         // alert('valor i '+i);
         TotalNeto = TotalNeto + parseFloat(ventas[i].neto);
         TotalDesc = TotalDesc + parseFloat(ventas[i].descuento_venta);
 
-        
-
-        // alert('pre '+ subtotal +' '+subneto+' des '+subtotal_desc);
 
         if (ayudante_numero_venta === ventas[i].numero_venta) {
             var posicion = dame_posicion_venta(ventas_totales, ventas[i].numero_venta);
             // alert('valor pos '+ posicion);
             ventas_totales[posicion].agrega_producto_lista(ventas[i].numero_productos, ventas[i].nombre_producto);
-            
-            //
-            ventas_totales[posicion].descuento_venta = parseFloat(ventas_totales[posicion].descuento_venta) + parseFloat(ventas[i].descuento_venta);;
-            //
 
             ventas_totales[posicion].total = parseFloat(ventas_totales[posicion].total) + parseFloat(subtotal);
             
             ventas_totales[posicion].utilidad = parseFloat(ventas_totales[posicion].utilidad) + parseFloat(subtotal_utilidad);
             numero_productos += parseFloat(ventas[i].numero_productos);
+
+            //
+            ventas_totales[posicion].descuento_venta = parseFloat(ventas_totales[posicion].descuento_venta) + parseFloat(subtotal_desc);
+            ventas_totales[posicion].neto = parseFloat(ventas_totales[posicion].neto) + parseFloat(subtotal_neto);;
+            //
+
+
         } else {
             ventas_totales.push(
                 new Venta(
@@ -309,8 +311,10 @@ function dibuja_tabla_ventas(ventas) {
                     subtotal,
                     ventas[i].usuario,
                     ventas[i].familia,
-                    parseFloat(ventas[i].descuento_venta),
-                    subtotal_utilidad
+                    subtotal_utilidad,
+                    subtotal_desc,
+                    subtotal_neto
+
                 )
             );
             ayudante_numero_venta = ventas[i].numero_venta;
@@ -329,8 +333,8 @@ function dibuja_tabla_ventas(ventas) {
                         $("<td>").html(ventas_totales[i].numero_productos),
                         $("<td>").html("$" + ventas_totales[i].total),
                         
-                        // $("<td>").html("$" + ventas_totales[i].descuento_venta),
-                        // $("<td>").html("$" + (ventas_totales[i].total)),
+                        $("<td>").html("$" + ventas_totales[i].descuento_venta),
+                        $("<td style='background-color:#18bc9c'>").html("$" + (ventas_totales[i].neto)),
                         
                         // $("<td>").html("$" + (ventas_totales[i].utilidad)),
                         $("<td>").html(ventas_totales[i].usuario)
